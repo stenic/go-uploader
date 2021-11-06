@@ -31,6 +31,7 @@ func (d *MinioDriver) Upload(ctx context.Context, src *url.URL, dst *url.URL) (*
 	if err != nil {
 		return nil, err
 	}
+	log.Debug("Client created")
 
 	file, err := os.Open(srcPath)
 	if err != nil {

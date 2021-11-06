@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"net/url"
+	"sync"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -17,42 +18,60 @@ var cmdUpload = &cobra.Command{
 	Short: "Do the upload",
 	Args:  cobra.MinimumNArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-		log := logrus.New()
-
+		ctx := logger.ContextWithLogger(context.Background(), logrus.WithFields(logrus.Fields{}))
 		src, err := url.Parse(args[0])
 		if err != nil {
 			return err
 		}
-		dst, err := url.Parse(args[1])
-		if err != nil {
-			return err
+
+		var wg sync.WaitGroup
+		for _, d := range args[1:] {
+			wg.Add(1)
+			dArg := d
+			go func() {
+				defer wg.Done()
+				doUpload(ctx, src, dArg)
+			}()
 		}
-		if dst.Scheme == "" {
-			return errors.New("DST needs to contain a schema (local://path)")
-		}
+		wg.Wait()
 
-		log.Debugf("Uploading %s to %v (protocol %s) \n", args[0], dst.Host+dst.Path, dst.Scheme)
-
-		driver, err := driver.GetDriver(dst.Scheme)
-		if err != nil {
-			return err
-		}
-
-		log.Debugf("Found driver for %s %T\n", dst.Scheme, driver)
-
-		start := time.Now()
-		_, err = driver.Upload(
-			logger.ContextWithLogger(ctx, logrus.WithFields(logrus.Fields{"driver": dst.Scheme})),
-			src,
-			dst,
-		)
-		duration := time.Since(start)
-
-		log.Infof("Upload completed in %f seconds", duration.Seconds())
-
-		return err
+		return nil
 	},
+}
+
+func doUpload(ctx context.Context, src *url.URL, dstArg string) error {
+	log := logger.LoggerFromContext(ctx)
+
+	dst, err := url.Parse(dstArg)
+	if err != nil {
+		return err
+	}
+
+	if dst.Scheme == "" {
+		return errors.New("DST needs to contain a schema (local://path)")
+	}
+
+	log.Debugf("Uploading %s to %v (protocol %s) \n", src.Host+src.Path, dst.Host+dst.Path, dst.Scheme)
+
+	driver, err := driver.GetDriver(dst.Scheme)
+	if err != nil {
+		return err
+	}
+
+	log.Debugf("Found driver for %s %T\n", dst.Scheme, driver)
+
+	start := time.Now()
+	_, err = driver.Upload(
+		logger.ContextWithLogger(ctx, logrus.WithFields(logrus.Fields{"driver": dst.Scheme})),
+		src,
+		dst,
+	)
+	duration := time.Since(start)
+
+	log.Infof("%s: Upload completed in %f seconds", dst.Scheme, duration.Seconds())
+
+	return err
+
 }
 
 func init() {
