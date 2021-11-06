@@ -30,7 +30,9 @@ var cmdUpload = &cobra.Command{
 			dArg := d
 			go func() {
 				defer wg.Done()
-				doUpload(ctx, src, dArg)
+				if err := doUpload(ctx, src, dArg); err != nil {
+					logrus.Error(err)
+				}
 			}()
 		}
 		wg.Wait()

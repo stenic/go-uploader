@@ -32,3 +32,10 @@ services:
       - './.tmp/ftp:/home/ftpusers/test'
     environment:
       - 'PUBLICHOST=192.168.99.100'
+
+  filestore:
+    image: rumkin/file-store
+    ports:
+      - 4444:8080
+    volumes:
+      - './.tmp/filestore:/data'
