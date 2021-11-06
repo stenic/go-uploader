@@ -46,6 +46,7 @@ func (d *FtpDriver) Upload(ctx context.Context, src *url.URL, dst *url.URL) (*Up
 	if err != nil {
 		return nil, err
 	}
+	defer file.Close()
 	log.Debug("Open file completed")
 
 	if err = ftpClient.Stor(filepath.Base(dstPath), file); err != nil {

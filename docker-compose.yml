@@ -6,10 +6,23 @@ services:
     ports:
       - 9000:9000
     environment:
-      MINIO_ACCESS_KEY: s3key
-      MINIO_SECRET_KEY: s3secret
+      MINIO_ACCESS_KEY: test
+      MINIO_SECRET_KEY: testtest
     command: server /data
-    
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio http://minio:9000 test testtest;
+      /usr/bin/mc rm -r --force myminio/somebucketname;
+      /usr/bin/mc mb myminio/somebucketname;
+      /usr/bin/mc policy download myminio/somebucketname;
+      exit 0;
+      "
+
   ftp:
     image: afharo/pure-ftp
     ports:
