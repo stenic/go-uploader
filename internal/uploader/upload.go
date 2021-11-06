@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"net/url"
+	"time"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -31,20 +32,24 @@ var cmdUpload = &cobra.Command{
 			return errors.New("DST needs to contain a schema (local://path)")
 		}
 
-		log.Infof("Going to upload %s to %v protocol %s \n", args[0], dst.Host+dst.Path, dst.Scheme)
+		log.Debugf("Uploading %s to %v (protocol %s) \n", args[0], dst.Host+dst.Path, dst.Scheme)
 
 		driver, err := driver.GetDriver(dst.Scheme)
 		if err != nil {
 			return err
 		}
 
-		res, err := driver.Upload(
-			logger.ContextWithLogger(ctx, logrus.WithFields(logrus.Fields{"driver": "local"})),
+		log.Debugf("Found driver for %s %T\n", dst.Scheme, driver)
+
+		start := time.Now()
+		_, err = driver.Upload(
+			logger.ContextWithLogger(ctx, logrus.WithFields(logrus.Fields{"driver": dst.Scheme})),
 			src,
 			dst,
 		)
+		duration := time.Since(start)
 
-		log.Debugf("%v\n", res)
+		log.Infof("Upload completed in %f seconds", duration.Seconds())
 
 		return err
 	},

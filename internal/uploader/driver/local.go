@@ -20,7 +20,7 @@ func (d *LocalDriver) Upload(ctx context.Context, src *url.URL, dst *url.URL) (*
 
 	var srcPath = src.Host + src.Path
 	var dstPath = dst.Host + dst.Path
-	log.Infof("Copy %s to %s\n", srcPath, dstPath)
+	log.Debug("Copy %s to %s\n", srcPath, dstPath)
 
 	err := cp.CopyFile(srcPath, dstPath)
 
