@@ -3,7 +3,7 @@ NC=\033[0m\n
 
 test: services
 	@printf "${INFO}Build binary${NC}"
-	go build -o .tmp/go-uploader main.go
+	go build -ldflags="`vembed`" -o .tmp/go-uploader main.go
 	ls -lah .tmp
 
 	@printf "${INFO}Testing singles${NC}"
