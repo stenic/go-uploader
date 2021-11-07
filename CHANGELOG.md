@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/stenic/go-uploader/compare/v1.0.0...v1.0.1) (2021-11-07)
+
+
+### Bug Fixes
+
+* Simplify dist stage ([886cfaf](https://github.com/stenic/go-uploader/commit/886cfafffe1011590414b4771294bbf38ad15854))
+
 # 1.0.0 (2021-11-07)
 
 
@@ -13,4 +20,3 @@ All notable changes to this project will be documented in this file. See
 * Implement http/https ([460af6d](https://github.com/stenic/go-uploader/commit/460af6d830fa1cd63b940c6bd884777ea6f006d2))
 * Implement minio ([a22f7b9](https://github.com/stenic/go-uploader/commit/a22f7b99af657cd3f8717294028d14a76ffd4e31))
 * Implement multiple destinations ([581c63a](https://github.com/stenic/go-uploader/commit/581c63a3537440e78d173719f4fbac949660d562))
-
