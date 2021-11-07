@@ -25,3 +25,17 @@ services:
 	rm -rf .tmp
 	mkdir -p .tmp/{ftp,local}
 	docker-compose up -d
+
+clean:
+	rm -rf dist .tmp
+
+buildPack = GOOS=$(1) GOARCH=$(2) go build -ldflags="`vembed`" -o dist/go-uploader$(3) main.go \
+	&& (cd dist; zip $(1)_$(2).zip go-uploader$(3); rm go-uploader$(3))
+
+dist:
+	$(call buildPack,windows,amd64,.exe)
+	$(call buildPack,windows,arm64,.exe)
+	$(call buildPack,darwin,amd64,)
+	$(call buildPack,darwin,arm64,)
+	$(call buildPack,linux,amd64,)
+	$(call buildPack,linux,arm64,)
