@@ -1,4 +1,6 @@
 # Go-Uploader
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fstenic%2Fgo-uploader.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fstenic%2Fgo-uploader?ref=badge_shield)
+
 
 Go-uploader is tool allowing you to upload a file to a set of services.
 
@@ -36,3 +38,7 @@ go-uploader upload examples/assets/testfile.txt minio://test:testtest@127.0.0.1:
 ```sh
 go-uploader upload examples/assets/testfile.txt http+post://127.0.0.1:4444/files/testfile.txt
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fstenic%2Fgo-uploader.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fstenic%2Fgo-uploader?ref=badge_large)
