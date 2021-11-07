@@ -15,7 +15,7 @@ module.exports = {
 	  }],
 	  ["@semantic-release/github", {
 		"assets": [
-		  {"path": "dist/*.zip", "label": "Binary distribution"}
+		  {"path": "dist/*.zip"}
 		]
 	  }],
 	],
