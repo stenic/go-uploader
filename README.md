@@ -2,6 +2,15 @@
 
 Go-uploader is tool allowing you to upload a file to a set of services.
 
+## Install
+
+```sh
+wget https://github.com/stenic/go-uploader/releases/latest/download/go-uploader_$GOOS_$GOARCH.gz
+gunzip go-uploader_*.gz
+chmod +x go-uploader_*
+mv go-uploader_* /usr/local/bin/go-uploader
+```
+
 ## Drivers
 
 ### Local
