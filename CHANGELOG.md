@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/stenic/go-uploader/compare/v1.0.3...v1.0.4) (2021-11-20)
+
+
+### Bug Fixes
+
+* Add license ([ca6419a](https://github.com/stenic/go-uploader/commit/ca6419aa7d0bbf36b70bb395fceea02832c4669c))
+
 ## [1.0.3](https://github.com/stenic/go-uploader/compare/v1.0.2...v1.0.3) (2021-11-20)
 
 
