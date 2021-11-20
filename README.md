@@ -2,14 +2,32 @@
 
 Go-uploader is tool allowing you to upload a file to a set of services.
 
-## Install
+## Installation
 
-```sh
-wget https://github.com/stenic/go-uploader/releases/latest/download/go-uploader_$GOOS_$GOARCH.gz
-gunzip go-uploader_*.gz
-chmod +x go-uploader_*
-mv go-uploader_* /usr/local/bin/go-uploader
+```shell
+# homebrew
+brew install stenic/tap/go-uploader
+
+# gofish
+gofish rig add https://github.com/stenic/fish-food
+gofish install github.com/stenic/fish-food/go-uploader
+
+# scoop
+scoop bucket add go-uploader https://github.com/stenic/scoop-bucket.git
+scoop install go-uploader
+
+# go
+go install github.com/stenic/go-uploader@latest
+
+# docker 
+docker pull ghcr.io/stenic/go-uploader:latest
+
+# dockerfile
+COPY --from=ghcr.io/stenic/go-uploader:latest /go-uploader /usr/local/bin/
 ```
+
+> For even more options, check the [releases page](https://github.com/stenic/go-uploader/releases).
+
 
 ## Drivers
 

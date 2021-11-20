@@ -1,4 +1,3 @@
-
 module.exports = {
 	"plugins": [
 	  ["@semantic-release/commit-analyzer"],
@@ -9,15 +8,7 @@ module.exports = {
 	  ["@semantic-release/git", {
 		"assets": ["CHANGELOG.md"],
 		"message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
-	  }],
-	  ["@semantic-release/exec", {
-		"prepareCmd": "make dist",
-	  }],
-	  ["@semantic-release/github", {
-		"assets": [
-		  {"path": "dist/*.gz"}
-		]
-	  }],
+	  }]
 	],
-	"branches": ["master", "main"]
+	"branches": ["main"]
   }
